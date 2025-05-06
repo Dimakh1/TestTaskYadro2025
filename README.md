@@ -13,7 +13,7 @@ test_file.txt – Тест от компании YADRO
 Устанавливаем MinGw по гайду из видео: https://yandex.ru/video/preview/9931902351508964598  
 Переходим в папку с проектом и запускаем PowerShell  
 Выполняем следующую команду:
-<pre>g++ main.cpp -o task.exe</pre>
+<pre>g++ source.cpp -o task.exe</pre>
 
 Затем для запуска программы вводим команду: 
 <pre>./task.exe YadroTest/test_file.txt</pre>
