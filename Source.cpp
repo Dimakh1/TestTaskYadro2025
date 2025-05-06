@@ -5,46 +5,46 @@
 #include <queue>
 using namespace std;
 
-// Структура для хранения события (время, тип, имя клиента, номер стола)
+// Г‘ГІГ°ГіГЄГІГіГ°Г  Г¤Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї Г±Г®ГЎГ»ГІГЁГї (ГўГ°ГҐГ¬Гї, ГІГЁГЇ, ГЁГ¬Гї ГЄГ«ГЁГҐГ­ГІГ , Г­Г®Г¬ГҐГ° Г±ГІГ®Г«Г )
 struct Event {
     string time;
     int id;
     string client;
-    int table = -1; // -1 если не указан
+    int table = -1; // -1 ГҐГ±Г«ГЁ Г­ГҐ ГіГЄГ Г§Г Г­
 };
 
-// Структура для хранения статистики по столу
+// Г‘ГІГ°ГіГЄГІГіГ°Г  Г¤Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї Г±ГІГ ГІГЁГ±ГІГЁГЄГЁ ГЇГ® Г±ГІГ®Г«Гі
 struct TableStats {
-    string clientname;        // Имя клиента за столом
-    string sessionStart;      // Время начала текущей сессии
-    int totalMinutes = 0;     // Суммарное время использования стола (в минутах)
-    int totalRevenue = 0;     // Суммарная выручка по столу
+    string clientname;        // Г€Г¬Гї ГЄГ«ГЁГҐГ­ГІГ  Г§Г  Г±ГІГ®Г«Г®Г¬
+    string sessionStart;      // Г‚Г°ГҐГ¬Гї Г­Г Г·Г Г«Г  ГІГҐГЄГіГ№ГҐГ© Г±ГҐГ±Г±ГЁГЁ
+    int totalMinutes = 0;     // Г‘ГіГ¬Г¬Г Г°Г­Г®ГҐ ГўГ°ГҐГ¬Гї ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ Г­ГЁГї Г±ГІГ®Г«Г  (Гў Г¬ГЁГ­ГіГІГ Гµ)
+    int totalRevenue = 0;     // Г‘ГіГ¬Г¬Г Г°Г­Г Гї ГўГ»Г°ГіГ·ГЄГ  ГЇГ® Г±ГІГ®Г«Гі
 };
 
-// Структура для хранения информации о столе
+// Г‘ГІГ°ГіГЄГІГіГ°Г  Г¤Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГЁ Г® Г±ГІГ®Г«ГҐ
 struct Table {
-    int id;                   // Номер стола
-    string clientname;        // Имя клиента за этим столом (если есть)
+    int id;                   // ГЌГ®Г¬ГҐГ° Г±ГІГ®Г«Г 
+    string clientname;        // Г€Г¬Гї ГЄГ«ГЁГҐГ­ГІГ  Г§Г  ГЅГІГЁГ¬ Г±ГІГ®Г«Г®Г¬ (ГҐГ±Г«ГЁ ГҐГ±ГІГј)
 };
 
-// Класс, инкапсулирующий всю логику компьютерного клуба
+// ГЉГ«Г Г±Г±, ГЁГ­ГЄГ ГЇГ±ГіГ«ГЁГ°ГіГѕГ№ГЁГ© ГўГ±Гѕ Г«Г®ГЈГЁГЄГі ГЄГ®Г¬ГЇГјГѕГІГҐГ°Г­Г®ГЈГ® ГЄГ«ГіГЎГ 
 class ComputerClub {
-    int tableCount;                  // Количество столов
-    string openTime, closeTime;      // Время открытия и закрытия клуба
-    int pricePerHour;                // Стоимость часа
-    vector<Event> events;            // Список всех событий
-    vector<Table> tables;            // Список столов
-    vector<TableStats> stats;        // Статистика по каждому столу
-    queue<string> waitingQueue;      // Очередь ожидающих клиентов
+    int tableCount;                  // ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±ГІГ®Г«Г®Гў
+    string openTime, closeTime;      // Г‚Г°ГҐГ¬Гї Г®ГІГЄГ°Г»ГІГЁГї ГЁ Г§Г ГЄГ°Г»ГІГЁГї ГЄГ«ГіГЎГ 
+    int pricePerHour;                // Г‘ГІГ®ГЁГ¬Г®Г±ГІГј Г·Г Г±Г 
+    vector<Event> events;            // Г‘ГЇГЁГ±Г®ГЄ ГўГ±ГҐГµ Г±Г®ГЎГ»ГІГЁГ©
+    vector<Table> tables;            // Г‘ГЇГЁГ±Г®ГЄ Г±ГІГ®Г«Г®Гў
+    vector<TableStats> stats;        // Г‘ГІГ ГІГЁГ±ГІГЁГЄГ  ГЇГ® ГЄГ Г¦Г¤Г®Г¬Гі Г±ГІГ®Г«Гі
+    queue<string> waitingQueue;      // ГЋГ·ГҐГ°ГҐГ¤Гј Г®Г¦ГЁГ¤Г ГѕГ№ГЁГµ ГЄГ«ГЁГҐГ­ГІГ®Гў
 
 public:
     ComputerClub() {}
 
-    // Перевод времени "ЧЧ:ММ" в минуты от полуночи
+    // ГЏГҐГ°ГҐГўГ®Г¤ ГўГ°ГҐГ¬ГҐГ­ГЁ "Г—Г—:ГЊГЊ" Гў Г¬ГЁГ­ГіГІГ» Г®ГІ ГЇГ®Г«ГіГ­Г®Г·ГЁ
     static int timeToMinutes(const string& t) {
         return stoi(t.substr(0, 2)) * 60 + stoi(t.substr(3, 2));
     }
-    // Перевод минут в строку "ЧЧ:ММ"
+    // ГЏГҐГ°ГҐГўГ®Г¤ Г¬ГЁГ­ГіГІ Гў Г±ГІГ°Г®ГЄГі "Г—Г—:ГЊГЊ"
     static string minutesToTime(int mins) {
         int h = mins / 60, m = mins % 60;
         string res;
@@ -55,17 +55,17 @@ public:
         res += to_string(m);
         return res;
     }
-    // Расчет стоимости с округлением времени до часа вверх
+    // ГђГ Г±Г·ГҐГІ Г±ГІГ®ГЁГ¬Г®Г±ГІГЁ Г± Г®ГЄГ°ГіГЈГ«ГҐГ­ГЁГҐГ¬ ГўГ°ГҐГ¬ГҐГ­ГЁ Г¤Г® Г·Г Г±Г  ГўГўГҐГ°Гµ
     static int calcCost(int minutes, int price) {
         int hours = (minutes + 59) / 60;
         return hours * price;
     }
 
-    // Подсчет разницы минут между start и end с учётом перехода через полночь и круглосуточного режима
+    // ГЏГ®Г¤Г±Г·ГҐГІ Г°Г Г§Г­ГЁГ¶Г» Г¬ГЁГ­ГіГІ Г¬ГҐГ¦Г¤Гі start ГЁ end Г± ГіГ·ВёГІГ®Г¬ ГЇГҐГ°ГҐГµГ®Г¤Г  Г·ГҐГ°ГҐГ§ ГЇГ®Г«Г­Г®Г·Гј ГЁ ГЄГ°ГіГЈГ«Г®Г±ГіГІГ®Г·Г­Г®ГЈГ® Г°ГҐГ¦ГЁГ¬Г 
     static int diffMinutes(const string& start, const string& end) {
         int s = timeToMinutes(start);
         int e = timeToMinutes(end);
-        if (e == s) // круглосуточно
+        if (e == s) // ГЄГ°ГіГЈГ«Г®Г±ГіГІГ®Г·Г­Г®
             return 24 * 60;
         else if (e > s)
             return e - s;
@@ -73,14 +73,14 @@ public:
             return (24 * 60 - s) + e;
     }
 
-    // Проверка формата времени "ЧЧ:ММ"
+    // ГЏГ°Г®ГўГҐГ°ГЄГ  ГґГ®Г°Г¬Г ГІГ  ГўГ°ГҐГ¬ГҐГ­ГЁ "Г—Г—:ГЊГЊ"
     static bool isValidTime(const string& t) {
         return t.size() == 5 &&
             isdigit(t[0]) && isdigit(t[1]) &&
             t[2] == ':' &&
             isdigit(t[3]) && isdigit(t[4]);
     }
-    // Проверка валидности имени клиента
+    // ГЏГ°Г®ГўГҐГ°ГЄГ  ГўГ Г«ГЁГ¤Г­Г®Г±ГІГЁ ГЁГ¬ГҐГ­ГЁ ГЄГ«ГЁГҐГ­ГІГ 
     static bool isValidName(const string& name) {
         for (char c : name)
             if (!(c >= 'a' && c <= 'z') && !(c >= '0' && c <= '9') && c != '_' && c != '-')
@@ -88,34 +88,34 @@ public:
         return true;
     }
 
-    // Чтение и проверка конфигурации клуба из файла
+    // Г—ГІГҐГ­ГЁГҐ ГЁ ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГЁ ГЄГ«ГіГЎГ  ГЁГ§ ГґГ Г©Г«Г 
     bool readConfig(ifstream& inputFile) {
         inputFile >> tableCount;
-        if (inputFile.fail() || tableCount <= 0) { //Некорректное количество столов
+        if (inputFile.fail() || tableCount <= 0) { //ГЌГҐГЄГ®Г°Г°ГҐГЄГІГ­Г®ГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±ГІГ®Г«Г®Гў
             cout << tableCount << endl;
             return false;
         }
         inputFile >> openTime >> closeTime;
-        if (!isValidTime(openTime) || !isValidTime(closeTime)) { //Некорректный формат времени открытия/закрытия
+        if (!isValidTime(openTime) || !isValidTime(closeTime)) { //ГЌГҐГЄГ®Г°Г°ГҐГЄГІГ­Г»Г© ГґГ®Г°Г¬Г ГІ ГўГ°ГҐГ¬ГҐГ­ГЁ Г®ГІГЄГ°Г»ГІГЁГї/Г§Г ГЄГ°Г»ГІГЁГї
             cout << openTime << " " << closeTime << endl;
             
             return false;
         }
-        // Разрешаем круглосуточную работу (09:00 09:00) и переход через сутки
+        // ГђГ Г§Г°ГҐГёГ ГҐГ¬ ГЄГ°ГіГЈГ«Г®Г±ГіГІГ®Г·Г­ГіГѕ Г°Г ГЎГ®ГІГі (09:00 09:00) ГЁ ГЇГҐГ°ГҐГµГ®Г¤ Г·ГҐГ°ГҐГ§ Г±ГіГІГЄГЁ
         inputFile >> pricePerHour;
-        if (inputFile.fail() || pricePerHour <= 0) { //Некорректная стоимость часа
+        if (inputFile.fail() || pricePerHour <= 0) { //ГЌГҐГЄГ®Г°Г°ГҐГЄГІГ­Г Гї Г±ГІГ®ГЁГ¬Г®Г±ГІГј Г·Г Г±Г 
             cout << pricePerHour << endl; 
             
             return false;
         }
-        inputFile.ignore(); // переход на следующую строку
+        inputFile.ignore(); // ГЇГҐГ°ГҐГµГ®Г¤ Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГіГѕ Г±ГІГ°Г®ГЄГі
         tables.resize(tableCount);
         stats.resize(tableCount);
         for (int i = 0; i < tableCount; ++i) tables[i].id = i + 1;
         return true;
     }
 
-    // Чтение и валидация событий из файла
+    // Г—ГІГҐГ­ГЁГҐ ГЁ ГўГ Г«ГЁГ¤Г Г¶ГЁГї Г±Г®ГЎГ»ГІГЁГ© ГЁГ§ ГґГ Г©Г«Г 
     bool readEvents(ifstream& inputFile) {
         string line, prevTime = "";
         while (getline(inputFile, line)) {
@@ -126,7 +126,7 @@ public:
             size_t pos = 0, prev = 0;
             int field = 0;
             string fields[4];
-            // Разделение строки на части (время, id, имя, [стол])
+            // ГђГ Г§Г¤ГҐГ«ГҐГ­ГЁГҐ Г±ГІГ°Г®ГЄГЁ Г­Г  Г·Г Г±ГІГЁ (ГўГ°ГҐГ¬Гї, id, ГЁГ¬Гї, [Г±ГІГ®Г«])
             while (field < 4 && (pos = line.find(' ', prev)) != string::npos) {
                 fields[field++] = line.substr(prev, pos - prev);
                 prev = pos + 1;
@@ -134,18 +134,18 @@ public:
             if (field < 4 && prev < line.size())
                 fields[field++] = line.substr(prev);
 
-            if (field < 3) { //Недостаточно полей в событии
+            if (field < 3) { //ГЌГҐГ¤Г®Г±ГІГ ГІГ®Г·Г­Г® ГЇГ®Г«ГҐГ© Гў Г±Г®ГЎГ»ГІГЁГЁ
                 cout <<  line << endl;
                 return false;
             }
 
             string eventTime = fields[0];
-            if (!isValidTime(eventTime)) { //некорректное время
+            if (!isValidTime(eventTime)) { //Г­ГҐГЄГ®Г°Г°ГҐГЄГІГ­Г®ГҐ ГўГ°ГҐГ¬Гї
                 cout << line << endl;
                 return false;
             }
 
-            if (!prevTime.empty() && timeToMinutes(eventTime) < timeToMinutes(prevTime)) { //время события не неубывающее
+            if (!prevTime.empty() && timeToMinutes(eventTime) < timeToMinutes(prevTime)) { //ГўГ°ГҐГ¬Гї Г±Г®ГЎГ»ГІГЁГї Г­ГҐ Г­ГҐГіГЎГ»ГўГ ГѕГ№ГҐГҐ
                 cout << line << endl;
                 
             }
@@ -155,7 +155,7 @@ public:
             try {
                 eventId = stoi(fields[1]);
             }
-            catch (...) { //некорректный id события
+            catch (...) { //Г­ГҐГЄГ®Г°Г°ГҐГЄГІГ­Г»Г© id Г±Г®ГЎГ»ГІГЁГї
                 cout <<  line << endl;
                 return false;
             }
@@ -165,7 +165,7 @@ public:
             }
 
             string clientName = fields[2];
-            if (!isValidName(clientName)) { // некорректное имя клиента 
+            if (!isValidName(clientName)) { // Г­ГҐГЄГ®Г°Г°ГҐГЄГІГ­Г®ГҐ ГЁГ¬Гї ГЄГ«ГЁГҐГ­ГІГ  
                 cout <<  line  << endl;
                 return false;
             }
@@ -175,11 +175,11 @@ public:
                 try {
                     tableNum = stoi(fields[3]);
                 }
-                catch (...) { // некорректный номер стола
+                catch (...) { // Г­ГҐГЄГ®Г°Г°ГҐГЄГІГ­Г»Г© Г­Г®Г¬ГҐГ° Г±ГІГ®Г«Г 
                     cout <<  line << endl;
                     return false;
                 }
-                if (tableNum < 1 || tableNum > tableCount) { // номер стола вне диапазона в событии
+                if (tableNum < 1 || tableNum > tableCount) { // Г­Г®Г¬ГҐГ° Г±ГІГ®Г«Г  ГўГ­ГҐ Г¤ГЁГ ГЇГ Г§Г®Г­Г  Гў Г±Г®ГЎГ»ГІГЁГЁ
                     cout <<  line << endl;
                     return false;
                 }
@@ -195,12 +195,12 @@ public:
     }
 
 
-    // Основной цикл обработки событий
+    // ГЋГ±Г­Г®ГўГ­Г®Г© Г¶ГЁГЄГ« Г®ГЎГ°Г ГЎГ®ГІГЄГЁ Г±Г®ГЎГ»ГІГЁГ©
     void run() {
-        cout << openTime << endl; // Вывод времени открытия
+        cout << openTime << endl; // Г‚Г»ГўГ®Г¤ ГўГ°ГҐГ¬ГҐГ­ГЁ Г®ГІГЄГ°Г»ГІГЁГї
         for (size_t i = 0; i < events.size(); ++i) {
             const Event& ev = events[i];
-            // В зависимости от типа события вызываем нужный обработчик
+            // Г‚ Г§Г ГўГЁГ±ГЁГ¬Г®Г±ГІГЁ Г®ГІ ГІГЁГЇГ  Г±Г®ГЎГ»ГІГЁГї ГўГ»Г§Г»ГўГ ГҐГ¬ Г­ГіГ¦Г­Г»Г© Г®ГЎГ°Г ГЎГ®ГІГ·ГЁГЄ
             switch (ev.id) {
             case 1: processEnter(ev, i); break;
             case 2: processSit(ev, i); break;
@@ -208,12 +208,12 @@ public:
             case 4: processLeave(ev, i); break;
             }
         }
-        closeClub();  // Завершение работы клуба: выгоняем всех оставшихся клиентов
-        printStats(); // Вывод итоговой статистики
+        closeClub();  // Г‡Г ГўГҐГ°ГёГҐГ­ГЁГҐ Г°Г ГЎГ®ГІГ» ГЄГ«ГіГЎГ : ГўГ»ГЈГ®Г­ГїГҐГ¬ ГўГ±ГҐГµ Г®Г±ГІГ ГўГёГЁГµГ±Гї ГЄГ«ГЁГҐГ­ГІГ®Гў
+        printStats(); // Г‚Г»ГўГ®Г¤ ГЁГІГ®ГЈГ®ГўГ®Г© Г±ГІГ ГІГЁГ±ГІГЁГЄГЁ
     }
 
 private:
-    // Обработка события "вход клиента"
+    // ГЋГЎГ°Г ГЎГ®ГІГЄГ  Г±Г®ГЎГ»ГІГЁГї "ГўГµГ®Г¤ ГЄГ«ГЁГҐГ­ГІГ "
     void processEnter(const Event& ev, int idx) {
         if (openTime != closeTime && timeToMinutes(ev.time) < timeToMinutes(openTime)) {
             cout << ev.time << " " << ev.id << " " << ev.client << endl;
@@ -231,7 +231,7 @@ private:
             }
         }
         bool alreadyIn = false;
-        // Проверка, не зашел ли клиент повторно без выхода
+        // ГЏГ°Г®ГўГҐГ°ГЄГ , Г­ГҐ Г§Г ГёГҐГ« Г«ГЁ ГЄГ«ГЁГҐГ­ГІ ГЇГ®ГўГІГ®Г°Г­Г® ГЎГҐГ§ ГўГ»ГµГ®Г¤Г 
         for (int j = idx - 1; j > lastNotOpenYetIdx; --j) {
             if (events[j].client == ev.client) {
                 if (events[j].id == 1) {
@@ -250,10 +250,10 @@ private:
         if (!alreadyIn) cout << ev.time << " " << ev.id << " " << ev.client << endl;
     }
 
-    // Обработка события "клиент садится за стол"
+    // ГЋГЎГ°Г ГЎГ®ГІГЄГ  Г±Г®ГЎГ»ГІГЁГї "ГЄГ«ГЁГҐГ­ГІ Г±Г Г¤ГЁГІГ±Гї Г§Г  Г±ГІГ®Г«"
     void processSit(const Event& ev, int idx) {
         bool clientnotinclub = false;
-        // Проверка, находится ли клиент в клубе
+        // ГЏГ°Г®ГўГҐГ°ГЄГ , Г­Г ГµГ®Г¤ГЁГІГ±Гї Г«ГЁ ГЄГ«ГЁГҐГ­ГІ Гў ГЄГ«ГіГЎГҐ
         for (int j = idx - 1; j >= 0; --j) {
             if (events[j].client == ev.client) {
                 if (events[j].id == 1) break;
@@ -268,7 +268,7 @@ private:
         if (!clientnotinclub) {
             int idxTable = ev.table - 1;
             if (tables[idxTable].clientname.empty()) {
-                // Если клиент уже сидит за другим столом - закрываем предыдущую сессию
+                // Г…Г±Г«ГЁ ГЄГ«ГЁГҐГ­ГІ ГіГ¦ГҐ Г±ГЁГ¤ГЁГІ Г§Г  Г¤Г°ГіГЈГЁГ¬ Г±ГІГ®Г«Г®Г¬ - Г§Г ГЄГ°Г»ГўГ ГҐГ¬ ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГіГѕ Г±ГҐГ±Г±ГЁГѕ
                 for (int j = 0; j < (int)tables.size(); ++j) {
                     if (tables[j].clientname == ev.client) {
                         if (!stats[j].sessionStart.empty()) {
@@ -281,35 +281,35 @@ private:
                         stats[j].sessionStart.clear();
                     }
                 }
-                // Садим клиента за выбранный стол
+                // Г‘Г Г¤ГЁГ¬ ГЄГ«ГЁГҐГ­ГІГ  Г§Г  ГўГ»ГЎГ°Г Г­Г­Г»Г© Г±ГІГ®Г«
                 tables[idxTable].clientname = ev.client;
                 stats[idxTable].clientname = ev.client;
                 stats[idxTable].sessionStart = ev.time;
-                // Если клиент был в очереди - удаляем из очереди
+                // Г…Г±Г«ГЁ ГЄГ«ГЁГҐГ­ГІ ГЎГ»Г« Гў Г®Г·ГҐГ°ГҐГ¤ГЁ - ГіГ¤Г Г«ГїГҐГ¬ ГЁГ§ Г®Г·ГҐГ°ГҐГ¤ГЁ
                 if (!waitingQueue.empty() && ev.client == waitingQueue.front())
                     waitingQueue.pop();
                 cout << ev.time << " " << ev.id << " " << ev.client << " " << ev.table << endl;
             }
             else {
-                // Стол занят
+                // Г‘ГІГ®Г« Г§Г Г­ГїГІ
                 cout << ev.time << " " << ev.id << " " << ev.client << " " << ev.table << endl;
                 cout << ev.time << " 13 PlaceIsBusy" << endl;
             }
         }
     }
 
-    // Обработка события "клиент ждет в очереди"
+    // ГЋГЎГ°Г ГЎГ®ГІГЄГ  Г±Г®ГЎГ»ГІГЁГї "ГЄГ«ГЁГҐГ­ГІ Г¦Г¤ГҐГІ Гў Г®Г·ГҐГ°ГҐГ¤ГЁ"
     void processWait(const Event& ev, int idx) {
-        // Если очередь заполнена - клиент уходит
+        // Г…Г±Г«ГЁ Г®Г·ГҐГ°ГҐГ¤Гј Г§Г ГЇГ®Г«Г­ГҐГ­Г  - ГЄГ«ГЁГҐГ­ГІ ГіГµГ®Г¤ГЁГІ
         if (waitingQueue.size() >= (size_t)tableCount) {
             cout << ev.time << " " << ev.id << " " << ev.client << endl;
             cout << ev.time << " 11 " << ev.client << endl;
         }
         else {
-            // Добавляем клиента в очередь
+            // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ ГЄГ«ГЁГҐГ­ГІГ  Гў Г®Г·ГҐГ°ГҐГ¤Гј
             waitingQueue.push(ev.client);
             bool emptyplace = false;
-            // Проверяем, есть ли свободный стол
+            // ГЏГ°Г®ГўГҐГ°ГїГҐГ¬, ГҐГ±ГІГј Г«ГЁ Г±ГўГ®ГЎГ®Г¤Г­Г»Г© Г±ГІГ®Г«
             for (const auto& t : tables)
                 if (t.clientname.empty()) {
                     emptyplace = true;
@@ -322,10 +322,10 @@ private:
         }
     }
 
-    // Обработка события "клиент уходит"
+    // ГЋГЎГ°Г ГЎГ®ГІГЄГ  Г±Г®ГЎГ»ГІГЁГї "ГЄГ«ГЁГҐГ­ГІ ГіГµГ®Г¤ГЁГІ"
     void processLeave(const Event& ev, int idx) {
         bool clientnotinclub = false, clientwasonpc = false;
-        // Проверка, находится ли клиент в клубе
+        // ГЏГ°Г®ГўГҐГ°ГЄГ , Г­Г ГµГ®Г¤ГЁГІГ±Гї Г«ГЁ ГЄГ«ГЁГҐГ­ГІ Гў ГЄГ«ГіГЎГҐ
         for (int j = idx - 1; j >= 0; --j) {
             if (events[j].client == ev.client) {
                 if (events[j].id == 1) break;
@@ -341,7 +341,7 @@ private:
             for (int j = 0; j < (int)tables.size(); ++j) {
                 if (tables[j].clientname == ev.client) {
                     clientwasonpc = true;
-                    // Считаем время и выручку за сессию
+                    // Г‘Г·ГЁГІГ ГҐГ¬ ГўГ°ГҐГ¬Гї ГЁ ГўГ»Г°ГіГ·ГЄГі Г§Г  Г±ГҐГ±Г±ГЁГѕ
                     int duration = diffMinutes(stats[j].sessionStart, ev.time);
                     stats[j].totalMinutes += duration;
                     stats[j].totalRevenue += calcCost(duration, pricePerHour);
@@ -349,7 +349,7 @@ private:
                     stats[j].clientname.clear();
                     stats[j].sessionStart.clear();
                     cout << ev.time << " " << ev.id << " " << ev.client << endl;
-                    // Если есть ожидающий клиент, сажаем его за стол
+                    // Г…Г±Г«ГЁ ГҐГ±ГІГј Г®Г¦ГЁГ¤Г ГѕГ№ГЁГ© ГЄГ«ГЁГҐГ­ГІ, Г±Г Г¦Г ГҐГ¬ ГҐГЈГ® Г§Г  Г±ГІГ®Г«
                     if (!waitingQueue.empty()) {
                         tables[j].clientname = waitingQueue.front();
                         stats[j].clientname = waitingQueue.front();
@@ -365,7 +365,7 @@ private:
         }
     }
 
-    // Завершение работы клуба: всех оставшихся клиентов "выгоняем", считаем выручку
+    // Г‡Г ГўГҐГ°ГёГҐГ­ГЁГҐ Г°Г ГЎГ®ГІГ» ГЄГ«ГіГЎГ : ГўГ±ГҐГµ Г®Г±ГІГ ГўГёГЁГµГ±Гї ГЄГ«ГЁГҐГ­ГІГ®Гў "ГўГ»ГЈГ®Г­ГїГҐГ¬", Г±Г·ГЁГІГ ГҐГ¬ ГўГ»Г°ГіГ·ГЄГі
     void closeClub() {
         for (int j = 0; j < (int)tables.size(); ++j) {
             if (!stats[j].clientname.empty()) {
@@ -377,7 +377,7 @@ private:
         }
     }
 
-    // Итоговая печать выручки и времени по каждому столу
+    // Г€ГІГ®ГЈГ®ГўГ Гї ГЇГҐГ·Г ГІГј ГўГ»Г°ГіГ·ГЄГЁ ГЁ ГўГ°ГҐГ¬ГҐГ­ГЁ ГЇГ® ГЄГ Г¦Г¤Г®Г¬Гі Г±ГІГ®Г«Гі
     void printStats() {
         cout << closeTime << endl;
         for (int j = 0; j < (int)tables.size(); ++j)
@@ -387,9 +387,9 @@ private:
 
 int main() {
     setlocale(LC_ALL, "Ru");
-    ifstream inputFile("test_file.txt");  // Тестовый файл
+    ifstream inputFile("test_file.txt");  // Г’ГҐГ±ГІГ®ГўГ»Г© ГґГ Г©Г«
     if (!inputFile.is_open()) {
-        cout << "Не удалось открыть файл" << endl;
+        cout << "ГЌГҐ ГіГ¤Г Г«Г®Г±Гј Г®ГІГЄГ°Г»ГІГј ГґГ Г©Г«" << endl;
         return 1;
     }
     ComputerClub club;
