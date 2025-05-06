@@ -10,8 +10,8 @@ YadroTest:
 test_file.txt – Тест от компании YADRO   
 
 # Запуск на windows (с помощью mingw)
-Устанавливаем MinGw по гайду из видео: https://yandex.ru/video/preview/9931902351508964598
-Переходим в папку с проектом и запускаем PowerShell
+Устанавливаем MinGw по гайду из видео: https://yandex.ru/video/preview/9931902351508964598  
+Переходим в папку с проектом и запускаем PowerShell  
 Выполняем следующую команду:
 <pre>g++ main.cpp -o task.exe</pre>
 
@@ -23,11 +23,11 @@ test_file.txt – Тест от компании YADRO
 <pre>sudo apt update
 sudo apt install build-essential 
 sudo apt install clang</pre>
-Данные команды служат для установки компиляторов.
+Данные команды служат для установки компиляторов.  
 
 После установки переходим в папку с проектом и прописываем команду на выбор в зависимости от того, какой компилятор будет использоваться
-g++ source.cpp -o task
-clang++ source.cpp -o task
+<pre>g++ source.cpp -o task
+clang++ source.cpp -o task</pre>
 
 Затем для запуска программы вводим команду:
-./task YadroTest/test_file.txt
+<pre>./task YadroTest/test_file.txt</pre>
